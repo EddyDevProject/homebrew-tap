@@ -15,6 +15,8 @@ cask "aegisgpg" do
     strategy :github_latest
   end
 
+  depends_on :macos
+
   app "AegisGPG.app"
 
   # The app is only ad-hoc signed (not notarized): drop the quarantine flag so
