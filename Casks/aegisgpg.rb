@@ -8,23 +8,20 @@ cask "aegisgpg" do
   url "https://github.com/EddyDevProject/AegisGPG/releases/download/v#{version}/AegisGPG_#{version}_#{arch}.dmg"
   name "AegisGPG"
   desc "Desktop app to manage OpenPGP keys, encrypt, sign and verify"
-  homepage "https://aegisgpg.app"
+  homepage "https://aegisgpg.app/"
 
   livecheck do
     url :url
     strategy :github_latest
   end
 
-  depends_on macos: ">= :catalina"
-
   app "AegisGPG.app"
 
   # The app is only ad-hoc signed (not notarized): drop the quarantine flag so
   # Gatekeeper does not block it.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/AegisGPG.app"],
-                   sudo: false
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args: ["-dr", "com.apple.quarantine", "{{appdir}}/AegisGPG.app"]
   end
 
   zap trash: [
